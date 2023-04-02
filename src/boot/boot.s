@@ -49,7 +49,6 @@ start:
 
     mov esp, bootstacktop       ; 设置内核栈指针
     mov ebp, 0                  ; 设置帧指针位0
-    ; and esp, 0xFFFFFFF0       ; 栈地址按照16字节对齐
     mov [glb_mboot_ptr], ebx    ; 将ebx中存储的指针存入全局变量中
     call kern_entry             ; 调用内核入口函数
 stop:

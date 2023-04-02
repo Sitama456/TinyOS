@@ -1,5 +1,10 @@
 {
     "files.associations": {
-        "cstring": "c"
+        "cstring": "c",
+        "stdarg.h": "c",
+        "elf.h": "c",
+        "tinyos.h": "c",
+        "multiboot.h": "c",
+        "sstream": "c"
     }
 }

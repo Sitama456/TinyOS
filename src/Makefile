@@ -5,16 +5,16 @@ BIN= ../bin
 OBJS= ../objs
 TOOLS= ./tools
 SRC= .
-INCLUDE_DIR= ./libs ./kernel/driver
-INCLUDE= $(addprefix -I, $(INCLUDE_DIR))
+INCLUDE= ./include
+
 # 定义编译工具
 CC = gcc
 LD = ld 
 ASM = nasm
 
 # 定义编译选项
-C_FLAGS = -c -Wall -m32 -ggdb -gstabs+ -nostdinc -fno-pic 
-C_FLAGS += -fno-builtin -fno-stack-protector $(INCLUDE)
+C_FLAGS = -c -Wall -m32 -ggdb -gstabs+ -nostdinc -fno-pic -Werror 
+C_FLAGS += -fno-builtin -fno-stack-protector -I$(INCLUDE) 
 
 LD_FLAGS = -T tools/kernel.ld -m elf_i386 -nostdlib
 
@@ -52,6 +52,8 @@ $(BIN)/TinyOS.kernel: $(S_OBJECTS) $(C_OBJECTS)
 	@echo 链接内核文件...
 	$(LD) $(LD_FLAGS) $(S_OBJECTS) $(C_OBJECTS) -o $@
 
+.PHONY: TINYOS_KERNEL
+TINYOS_KERNEL: $(BIN)/TinyOS.kernel
 
 # 生成虚拟硬盘
 $(BIN)/master.img: $(TOOLS)/mk_grub_cfg $(BIN)/TinyOS.kernel
@@ -95,7 +97,7 @@ qemu: $(BIN)/master.img
 	$(QEMU) $(QEMU_DISK_BOOT)
 
 .PHONY: qemug
-qemug: $(IMAGES)
+qemug: $(BIN)/master.img
 	$(QEMU) $(QEMU_DISK_BOOT) $(QEMU_DEBUG)
 
 

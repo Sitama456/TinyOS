@@ -41,17 +41,17 @@ static uint8_t attr = vc_black << 4 | vc_green;        // 字符样式
 static uint16_t erase = 0x0720; // 空格
 
 // 获取屏幕的开始位置
-static void get_screen() {
-    outb(CRT_ADDR_REG, CRT_START_ADDR_H);       // 开始位置高地址
-    screen = inb(CRT_DATA_REG) << 8;            // 开始位置的高八位
+// static void get_screen() {
+//     outb(CRT_ADDR_REG, CRT_START_ADDR_H);       // 开始位置高地址
+//     screen = inb(CRT_DATA_REG) << 8;            // 开始位置的高八位
 
-    outb(CRT_ADDR_REG, CRT_START_ADDR_L);
-    screen |= inb(CRT_ADDR_REG);
+//     outb(CRT_ADDR_REG, CRT_START_ADDR_L);
+//     screen |= inb(CRT_ADDR_REG);
 
-    // screen 相当于第几个元素 每个元素有两个字节
-    screen <<= 1;
-    screen += MEM_BASE;
-}
+//     // screen 相当于第几个元素 每个元素有两个字节
+//     screen <<= 1;
+//     screen += MEM_BASE;
+// }
 
 // 设置当前显示器开始的位置
 static void set_screen() {
@@ -62,21 +62,21 @@ static void set_screen() {
 }
 
 // 获得当前光标的位置
-static void get_cursor() {
-    outb(CRT_ADDR_REG, CRT_CURSOR_H);
-    cursor_pos = inb(CRT_DATA_REG) << 8;
-    outb(CRT_ADDR_REG, CRT_CURSOR_L);
-    cursor_pos |= inb(CRT_DATA_REG);
+// static void get_cursor() {
+//     outb(CRT_ADDR_REG, CRT_CURSOR_H);
+//     cursor_pos = inb(CRT_DATA_REG) << 8;
+//     outb(CRT_ADDR_REG, CRT_CURSOR_L);
+//     cursor_pos |= inb(CRT_DATA_REG);
 
-    get_screen();
+//     get_screen();
 
-    cursor_pos <<= 1;
-    cursor_pos += MEM_BASE;
+//     cursor_pos <<= 1;
+//     cursor_pos += MEM_BASE;
 
-    uint32_t delta = (cursor_pos - screen) >> 1;
-    cursor_x = delta % WIDTH;
-    cursor_y = delta / WIDTH;
-}
+//     uint32_t delta = (cursor_pos - screen) >> 1;
+//     cursor_x = delta % WIDTH;
+//     cursor_y = delta / WIDTH;
+// }
 
 static void set_cursor() {
     outb(CRT_ADDR_REG, CRT_CURSOR_H);
@@ -94,7 +94,7 @@ void console_clear() {
     set_screen();
 
     uint16_t *ptr = (uint16_t *)MEM_BASE;
-    while (ptr < (uint16_t)MEM_END) {
+    while (ptr < (uint16_t *)MEM_END) {
         *ptr++ = erase;
     }
 }
@@ -108,7 +108,7 @@ static void scroll() {
         screen = MEM_BASE;
     }
     // 先清空要下滚的一行
-    uint16_t *ptr = (uint16_t)(screen + SCR_SIZE); 
+    uint16_t *ptr = (uint16_t *)(screen + SCR_SIZE); 
     for (size_t i = 0; i < WIDTH; ++i) {
         *ptr++ = erase;
     }
