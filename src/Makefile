@@ -20,7 +20,7 @@ LD_FLAGS = -T tools/kernel.ld -m elf_i386 -nostdlib
 
 ASM_FLAGS = -f elf -g -F stabs
 
-DEV_LOOP= /dev/loop4
+DEV_LOOP= /dev/loop17
 
 # 原文件
 C_SOURCES = $(shell find . -name "*.c")
