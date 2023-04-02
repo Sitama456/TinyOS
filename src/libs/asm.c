@@ -13,12 +13,12 @@ inline uint8_t inb(uint16_t port) {
 }
 
 inline void lgdt(pseudodesc_t* pd) {
-    asm volatile("lgdt (%0)"::"r"(pd));
-    asm volatile("movw %%ax, %%gs"::"a"(USER_DS));
-    asm volatile("movw %%ax, %%fs"::"a"(USER_DS));
-    asm volatile("movw %%ax, %%ds"::"a"(KERNEL_DS));
-    asm volatile("movw %%ax, %%ss"::"a"(KERNEL_DS));
-    asm volatile("movw %%ax, %%es"::"a"(KERNEL_DS));
+    asm volatile ("lgdt (%0)" :: "r" (pd));
+    asm volatile ("movw %%ax, %%gs" :: "a" (USER_DS));
+    asm volatile ("movw %%ax, %%fs" :: "a" (USER_DS));
+    asm volatile ("movw %%ax, %%es" :: "a" (KERNEL_DS));
+    asm volatile ("movw %%ax, %%ds" :: "a" (KERNEL_DS));
+    asm volatile ("movw %%ax, %%ss" :: "a" (KERNEL_DS));
 
     // 重新加载cs
     asm volatile("ljmp %0, $1f\n 1:\n"::"i"(KERNEL_CS));

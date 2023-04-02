@@ -1,3 +1,12 @@
+/*** 
+ * @Author: mzm
+ * @Date: 2023-04-02 00:04:37
+ * @LastEditTime: 2023-04-02 16:22:35
+ * @LastEditors: mzm
+ * @Description: 
+ * @FilePath: /TinyOS/src/include/stdarg.h
+ * @
+ */
 #ifndef _STDARG_H_
 #define _STDARG_H_
 

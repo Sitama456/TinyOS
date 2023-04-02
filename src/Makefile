@@ -13,14 +13,14 @@ LD = ld
 ASM = nasm
 
 # 定义编译选项
-C_FLAGS = -c -Wall -m32 -ggdb -gstabs+ -nostdinc -fno-pic -Werror 
+C_FLAGS = -c -Wall -m32 -ggdb -gstabs+ -nostdinc -fno-pic -Werror -fno-pie
 C_FLAGS += -fno-builtin -fno-stack-protector -I$(INCLUDE) 
 
 LD_FLAGS = -T tools/kernel.ld -m elf_i386 -nostdlib
 
 ASM_FLAGS = -f elf -g -F stabs
 
-DEV_LOOP= /dev/loop17
+DEV_LOOP= /dev/loop15
 
 # 原文件
 C_SOURCES = $(shell find . -name "*.c")
